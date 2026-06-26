@@ -1,0 +1,127 @@
+# ANTIGRAVITY — REDESIGN MVP LICITAI
+
+## CONTEXTO
+Projeto: LicitAI — Plataforma SaaS de monitoramento de licitações com IA.
+Stack: Vite + React 18 + TypeScript + Tailwind CSS + shadcn/ui + React Router
+Backend: Express + Prisma + SQLite rodando em localhost:3001
+Frontend atual: localhost:3000 (funcional mas com UI básica slate-950)
+
+## OBJETIVO
+Refazer o design system INTEIRO do frontend com visual nível SaaS profissional.
+Referência de qualidade: thesocialmidiamachine.com e himetrica.com
+
+## DESIGN SYSTEM A SER IMPLEMENTADO
+
+### Paleta
+- Background principal: #000000 (preto absoluto)
+- Background de cards: rgba(255,255,255,0.03) com backdrop-filter: blur(20px)
+- Bordas: rgba(255,255,255,0.06)
+- Texto primário: rgba(255,255,255,0.85)
+- Texto secundário: rgba(255,255,255,0.45)
+- Texto terciário: rgba(255,255,255,0.22)
+- Accent: #3B82F6 (blue-500) manter para botões e links
+- Sucesso: #4ade80
+- Warning: #fbbf24
+
+### Cards
+- background: rgba(255,255,255,0.025)
+- backdrop-filter: blur(24px)
+- border: 1px solid rgba(255,255,255,0.06)
+- border-radius: 20px
+- Hover: background sobe pra 0.04, border fica 0.12
+- Cards destacados: box-shadow 0 0 60px rgba(255,255,255,0.04)
+
+### Tipografia
+- Manter Inter (já está no projeto)
+- Headings: font-weight 800-900, letter-spacing -1px a -2px
+- Hero: clamp(48px, 8vw, 96px)
+- Section titles: clamp(32px, 5vw, 56px)
+- Body: 14-16px, line-height 1.5
+
+### Efeitos
+- Spotlight: radial-gradient nas seções principais
+- Glass em todos os cards e painéis
+- Hover: scale(1.02) ou translateY(-4px) com transição suave
+- Reveal: IntersectionObserver com fade-in + slide-up
+
+## PÁGINAS A REDESENHAR
+
+### 1. Home (pública — "/")
+- Hero section com headline impactante
+- Stats: "50+ editais/mês", "PNCP + BEC/SP", "Resumo em 10s"
+- Seção "Como funciona": 3 passos
+- Seção de planos: Free / Pro (R$97) / Business (R$297)
+- CTA final
+- Footer
+
+### 2. Login ("/login")
+- Card centralizado com glass
+- Inputs estilizados (fundo rgba(255,255,255,0.05), borda 0.06)
+- Botão com glow
+- Link para registro
+
+### 3. Register ("/register")
+- Mesmo estilo do Login
+- Campos: Nome, Email, Senha
+
+### 4. Dashboard (protegida — "/dashboard")
+- Header com logo + avatar + créditos
+- Sidebar esquerda: Dashboard, Favoritos, Licitações
+- Área principal:
+  - Barra de busca + filtros (UF, categoria, modalidade) em glass
+  - Grid de cards (3 colunas desktop, 1 mobile)
+  - Cada card: título, resumo, órgão, valor formatado, data, badge de categoria
+  - Paginação estilizada
+  - Botão "Sincronizar PNCP" com ícone
+
+### 5. Detalhe da Licitação ("/licitacao/:id")
+- Card grande com todos os campos
+- Botão "Favoritar" com estrela
+- Link para edital original no PNCP
+- Seção de resumo com IA
+
+## COMPONENTES SHADCN/UI A USAR
+(substituir os componentes atuais por versões estilizadas com o tema dark)
+- Button (variante glass + ghost + primary com glow)
+- Card (background rgba + blur + borda sutil)
+- Input (fundo dark + borda sutil + focus ring)
+- Select (mesmo estilo dos inputs)
+- Badge (para categorias)
+- Dialog/Modal
+- DropdownMenu
+- Separator
+
+## API (já funcionando — NÃO MEXER)
+- GET /api/licitacoes?page=&limit=&search=&uf=&categoria=&modalidade=
+- GET /api/licitacoes/:id
+- POST /api/licitacoes/sync (auth)
+- POST /api/auth/login
+- POST /api/auth/register
+- GET /api/auth/me (auth)
+
+## ARQUIVOS A MODIFICAR (apenas frontend)
+- src/index.css — CSS global com variáveis e tema
+- src/App.tsx — estrutura de rotas
+- src/pages/Home.tsx — landing page pública
+- src/pages/Login.tsx — tela de login
+- src/pages/Register.tsx — tela de registro
+- src/pages/Dashboard.tsx — dashboard principal
+- src/pages/LicitacaoDetail.tsx — detalhe da licitação
+- src/components/Layout.tsx — layout com sidebar
+- src/components/Header.tsx — header
+- src/components/Sidebar.tsx — sidebar
+- src/components/CardLicitacao.tsx — card de licitação
+- src/components/BadgeCategoria.tsx — badge
+
+## REGRAS
+1. NÃO usar classes slate-* — substituir pelo design system acima
+2. NÃO usar bg-slate-950, bg-slate-900, etc — usar bg-black ou rgba
+3. Manter a lógica de negócio (fetch, auth, estado) — só mudar visual
+4. Mobile-first com breakpoints md e lg
+5. Animações sutis: fadeIn, slideUp, transições de 0.3s ease-out
+6. Manter shadcn/ui como base de componentes
+7. NÃO mudar a API, rotas, ou lógica de autenticação
+
+## ENTREGA ESPERADA
+Substituir TODO o CSS e o markup visual mantendo a funcionalidade intacta.
+O resultado deve parecer um produto SaaS que cobra R$297/mês.

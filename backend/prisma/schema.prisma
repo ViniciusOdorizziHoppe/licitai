@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  name         String
+  plan         String     @default("FREE")
+  createdAt    DateTime   @default(now())
+  favoritos    Favorito[]
+}
+
+model Licitacao {
+  id            String     @id @default(uuid())
+  pncpId        String     @unique
+  titulo        String
+  objeto        String
+  orgao         String
+  cnpjOrgao     String?
+  modalidade    String?
+  valorEstimado Float?
+  dataAbertura  DateTime?
+  dataEncerramento DateTime?
+  situacao      String?
+  uf            String?
+  municipio     String?
+  categoria     String?    @default("OUTROS")
+  resumo        String?
+  palavrasChave String?
+  numeroEdital  String?
+  linkPncp      String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  favoritos     Favorito[]
+}
+
+model Favorito {
+  id          String    @id @default(uuid())
+  userId      String
+  licitacaoId String
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  licitacao   Licitacao @relation(fields: [licitacaoId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, licitacaoId])
+}
