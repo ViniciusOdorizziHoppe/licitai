@@ -62,7 +62,7 @@ router.get('/me', authMiddleware, (req: AuthRequest, res) => {
 
 router.get('/me', authMiddleware, async (req: AuthRequest, res) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id: req.userId } });
+    const user = await prisma.user.findUnique({ where: { id: req.user } });
     if (!user) { res.status(404).json({ error: 'Usuario nao encontrado' }); return; }
     res.json({ user: { id: user.id, email: user.email, name: user.name, plan: user.plan } });
   } catch (err) {

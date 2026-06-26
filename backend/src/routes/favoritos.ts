@@ -11,7 +11,7 @@ router.get('/', authMiddleware, async (req: AuthRequest, res) => {
       include: { licitacao: true },
       orderBy: { createdAt: 'desc' },
     });
-    res.json(favoritos.map(f => f.licitacao));
+    res.json(favoritos.map((f: any) => f.licitacao));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro ao buscar favoritos' });
